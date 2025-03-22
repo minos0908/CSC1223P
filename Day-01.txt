@@ -1,0 +1,159 @@
+
+Setting environment for using XAMPP for Windows.
+2022asp81@CL2-26 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| agriharvestnexus   |
+| bfl                |
+| bookboat           |
+| bookdb             |
+| books              |
+| company            |
+| dbay               |
+| englishfi          |
+| hospital           |
+| icae02             |
+| information_schema |
+| inventorty         |
+| it1223db           |
+| library            |
+| moviedb            |
+| mysql              |
+| palmyra            |
+| performance_schema |
+| phpmyadmin         |
+| studentdb          |
+| studenttdb         |
+| test               |
+| university         |
+| uovdb              |
+| web                |
++--------------------+
+25 rows in set (0.046 sec)
+
+MariaDB [(none)]> create database UOV;
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [(none)]> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| agriharvestnexus   |
+| bfl                |
+| bookboat           |
+| bookdb             |
+| books              |
+| company            |
+| dbay               |
+| englishfi          |
+| hospital           |
+| icae02             |
+| information_schema |
+| inventorty         |
+| it1223db           |
+| library            |
+| moviedb            |
+| mysql              |
+| palmyra            |
+| performance_schema |
+| phpmyadmin         |
+| studentdb          |
+| studenttdb         |
+| test               |
+| university         |
+| uov                |
+| uovdb              |
+| web                |
++--------------------+
+26 rows in set (0.001 sec)
+
+MariaDB [UOV]> DESC students;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| student_id | char(15)    | YES  |     | NULL    |       |
+| name       | varchar(30) | YES  |     | NULL    |       |
+| course     | varchar(30) | YES  |     | NULL    |       |
+| Dob        | date        | YES  |     | NULL    |       |
+| city       | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/81','Minos','AMC',2002-09-08,'Sammanthurai');
+Query OK, 1 row affected, 1 warning (0.031 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/81','Minos','AMC','2002-09-08','Sammanthurai');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> select * from students;
++-------------+-------+--------+------------+--------------+
+| student_id  | name  | course | Dob        | city         |
++-------------+-------+--------+------------+--------------+
+| 2022/ASP/81 | Minos | AMC    | 0000-00-00 | Sammanthurai |
+| 2022/ASP/81 | Minos | AMC    | 2002-09-08 | Sammanthurai |
++-------------+-------+--------+------------+--------------+
+2 rows in set (0.000 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/75','Stella','AMC','2003-05-05','Clombo');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/83','Piruthiga','AMC','2003-11-17','Batticalo');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/83','Cartharina','AMC','2003-12-19','Vavuniya');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> INSERT INTO students VALUES('2022/ASP/85','Danshika','AMC','2003-05-30','Jaffna');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> select * from students;
++-------------+------------+--------+------------+--------------+
+| student_id  | name       | course | Dob        | city         |
++-------------+------------+--------+------------+--------------+
+| 2022/ASP/81 | Minos      | AMC    | 0000-00-00 | Sammanthurai |
+| 2022/ASP/81 | Minos      | AMC    | 2002-09-08 | Sammanthurai |
+| 2022/ASP/75 | Stella     | AMC    | 2003-05-05 | Clombo       |
+| 2022/ASP/83 | Piruthiga  | AMC    | 2003-11-17 | Batticalo    |
+| 2022/ASP/83 | Cartharina | AMC    | 2003-12-19 | Vavuniya     |
+| 2022/ASP/85 | Danshika   | AMC    | 2003-05-30 | Jaffna       |
++-------------+------------+--------+------------+--------------+
+6 rows in set (0.000 sec)
+
+MariaDB [UOV]>
+MariaDB [UOV]> create table Physician(PhysicianID int,Name VARCHAR(30),Position VARCHAR(30));
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [UOV]> DESC Physician;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PhysicianID | int(11)     | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
+| Position    | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('1','John Dorian','Staff Internist');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('2','Elliod Reid','Attending Physician');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('2','Elliod Reid','');
+
+conculution:
+we learnt how to show datebase,create database and create table in XAMPP
+
+
