@@ -1,0 +1,5 @@
+LOAD DATA LOCAL INFILE 'C:/Users/Futuremind/Desktop/DB 2022ASP81/Day-2/data.csv'
+INTO TABLE students
+FIELDS TERMINATED BY'\,'
+LINES TERMINATED BY '\n'
+(ID,Name,Age,Grade,City);
