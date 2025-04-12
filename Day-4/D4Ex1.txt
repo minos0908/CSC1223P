@@ -1,0 +1,364 @@
+Futuremind@DESKTOP-PFVNKUO c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| hospital           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| university         |
+| uov                |
++--------------------+
+9 rows in set (0.002 sec)
+
+MariaDB [(none)]> use hospital;
+Database changed
+MariaDB [hospital]> create table employee(id INT PRIMARY KEY,name VARCHAR(30),age INT,department VARCHAR(30),salary DECIMAL(10,2),city CHAR(30));
+Query OK, 0 rows affected (0.320 sec)
+
+MariaDB [hospital]> DESC employee;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| id         | int(11)       | NO   | PRI | NULL    |       |
+| name       | varchar(30)   | YES  |     | NULL    |       |
+| age        | int(11)       | YES  |     | NULL    |       |
+| department | varchar(30)   | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| city       | char(30)      | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+6 rows in set (0.008 sec)
+
+MariaDB [hospital]> INSERT INTO employee VALUES
+    -> (101,'Alice',30,'HR',60000.00,'New York'),
+    -> (102,'Bob',28,'IT',75000.00,'Los Angeles'),
+    -> (103,'Charli',35,'Finance',80000.00,'Chicago'),
+    -> (104,'David',40,'IT ',90000.00,'San Fransicago'),
+    -> (105,'Emma',32,'Markating',70000.00,'New York'),
+    -> (106,'Frank',27,'HR',50000.00,'Chicago');
+Query OK, 6 rows affected (0.077 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]>  select *from employee;
++-----+--------+------+------------+----------+----------------+
+| id  | name   | age  | department | salary   | city           |
++-----+--------+------+------------+----------+----------------+
+| 101 | Alice  |   30 | HR         | 60000.00 | New York       |
+| 102 | Bob    |   28 | IT         | 75000.00 | Los Angeles    |
+| 103 | Charli |   35 | Finance    | 80000.00 | Chicago        |
+| 104 | David  |   40 | IT         | 90000.00 | San Fransicago |
+| 105 | Emma   |   32 | Markating  | 70000.00 | New York       |
+| 106 | Frank  |   27 | HR         | 50000.00 | Chicago        |
++-----+--------+------+------------+----------+----------------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]>  select name,salary from employee;
++--------+----------+
+| name   | salary   |
++--------+----------+
+| Alice  | 60000.00 |
+| Bob    | 75000.00 |
+| Charli | 80000.00 |
+| David  | 90000.00 |
+| Emma   | 70000.00 |
+| Frank  | 50000.00 |
++--------+----------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select DISTINCT department from employee;
++------------+
+| department |
++------------+
+| HR         |
+| IT         |
+| Finance    |
+| Markating  |
++------------+
+4 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from employee WHERE department='IT';
++-----+-------+------+------------+----------+----------------+
+| id  | name  | age  | department | salary   | city           |
++-----+-------+------+------------+----------+----------------+
+| 102 | Bob   |   28 | IT         | 75000.00 | Los Angeles    |
+| 104 | David |   40 | IT         | 90000.00 | San Fransicago |
++-----+-------+------+------------+----------+----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]>  select name from employee WHERE department='IT';
++-------+
+| name  |
++-------+
+| Bob   |
+| David |
++-------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select * from employee WHERE salary>70000;
++-----+--------+------+------------+----------+----------------+
+| id  | name   | age  | department | salary   | city           |
++-----+--------+------+------------+----------+----------------+
+| 102 | Bob    |   28 | IT         | 75000.00 | Los Angeles    |
+| 103 | Charli |   35 | Finance    | 80000.00 | Chicago        |
+| 104 | David  |   40 | IT         | 90000.00 | San Fransicago |
++-----+--------+------+------------+----------+----------------+
+3 rows in set (0.047 sec)
+
+MariaDB [hospital]>  select * from employee WHERE age BETWEEN 30 and 40 ;
++-----+--------+------+------------+----------+----------------+
+| id  | name   | age  | department | salary   | city           |
++-----+--------+------+------------+----------+----------------+
+| 101 | Alice  |   30 | HR         | 60000.00 | New York       |
+| 103 | Charli |   35 | Finance    | 80000.00 | Chicago        |
+| 104 | David  |   40 | IT         | 90000.00 | San Fransicago |
+| 105 | Emma   |   32 | Markating  | 70000.00 | New York       |
++-----+--------+------+------------+----------+----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [hospital]> select * from employee WHERE city='New York' OR city='Chicago';
++-----+--------+------+------------+----------+----------+
+| id  | name   | age  | department | salary   | city     |
++-----+--------+------+------------+----------+----------+
+| 101 | Alice  |   30 | HR         | 60000.00 | New York |
+| 103 | Charli |   35 | Finance    | 80000.00 | Chicago  |
+| 105 | Emma   |   32 | Markating  | 70000.00 | New York |
+| 106 | Frank  |   27 | HR         | 50000.00 | Chicago  |
++-----+--------+------+------------+----------+----------+
+4 rows in set (0.001 sec)
+MariaDB [hospital]> create table Product_Relation(product_id INT PRIMARY KEY,Name VARCHAR(30),Catagory VARCHAR(30),Price INT,StockQuantity INT);
+Query OK, 0 rows affected (0.200 sec)
+
+MariaDB [hospital]> DESC product_Relation;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| product_id    | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(30) | YES  |     | NULL    |       |
+| Catagory      | varchar(30) | YES  |     | NULL    |       |
+| Price         | int(11)     | YES  |     | NULL    |       |
+| StockQuantity | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.065 sec)
+MariaDB [hospital]> INSERT INTO product_Relation VALUES
+    -> (1,'Ultra Televition','Electronic',1200,30),
+    -> (2,'Runnig Shoes','Footwear',100,50),
+    -> (3,'Electric kettle','Appliances',45,25),
+    -> (4,'Denim jeans','Clothing',60,40),
+    ->  (5,'Bluetooth Headphones','Electronic',100,15);
+Query OK, 5 rows affected (0.105 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> select *from product_Relation;
++------------+----------------------+------------+-------+---------------+
+| product_id | Name                 | Catagory   | Price | StockQuantity |
++------------+----------------------+------------+-------+---------------+
+|          1 | Ultra Televition     | Electronic |  1200 |            30 |
+|          2 | Runnig Shoes         | Footwear   |   100 |            50 |
+|          3 | Electric kettle      | Appliances |    45 |            25 |
+|          4 | Denim jeans          | Clothing   |    60 |            40 |
+|          5 | Bluetooth Headphones | Electronic |   100 |            15 |
++------------+----------------------+------------+-------+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hospital]> create table Customer_Relation(CustomerID INT PRIMARY KEY,FullName CHAR(30),RegistrationDate DATE,phoneno VARCHAR(11));
+Query OK, 0 rows affected (0.210 sec)
+
+MariaDB [hospital]>  DESC  Customer_Relation;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| CustomerID       | int(11)     | NO   | PRI | NULL    |       |
+| FullName         | char(30)    | YES  |     | NULL    |       |
+| RegistrationDate | date        | YES  |     | NULL    |       |
+| phoneno          | varchar(11) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.007 sec)
+
+MariaDB [hospital]> INSERT INTO  Customer_Relation VALUES
+    -> (1,'Alice Johan','2025-03-15','+12131512156'),
+    -> (2,'Bob Smith','2024-05-11','+1234455688'),
+    -> (3,'Carol Bown','2022-06-18','+2332433456'),
+    -> (4,'Veliyam Yaso','2021-09-15','+2332533346'),
+    -> (5,'Ranga Osari','2023-01-10','+2332437896');
+Query OK, 5 rows affected, 1 warning (0.107 sec)
+Records: 5  Duplicates: 0  Warnings: 1
+
+MariaDB [hospital]> select *from  Customer_Relation;
++------------+--------------+------------------+-------------+
+| CustomerID | FullName     | RegistrationDate | phoneno     |
++------------+--------------+------------------+-------------+
+|          1 | Alice Johan  | 2025-03-15       | +1213151215 |
+|          2 | Bob Smith    | 2024-05-11       | +1234455688 |
+|          3 | Carol Bown   | 2022-06-18       | +2332433456 |
+|          4 | Veliyam Yaso | 2021-09-15       | +2332533346 |
+|          5 | Ranga Osari  | 2023-01-10       | +2332437896 |
++------------+--------------+------------------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hospital]> create table seles_relation(selesId int primary key,productID int,customerID int,seledate date,quantitysales int);
+Query OK, 0 rows affected (0.169 sec)
+MariaDB [hospital]> DESC seles_relation;
++---------------+---------+------+-----+---------+-------+
+| Field         | Type    | Null | Key | Default | Extra |
++---------------+---------+------+-----+---------+-------+
+| selesId       | int(11) | NO   | PRI | NULL    |       |
+| productID     | int(11) | YES  |     | NULL    |       |
+| customerID    | int(11) | YES  |     | NULL    |       |
+| seledate      | date    | YES  |     | NULL    |       |
+| quantitysales | int(11) | YES  |     | NULL    |       |
++---------------+---------+------+-----+---------+-------+
+5 rows in set (0.168 sec)
+
+MariaDB [hospital]> INSERT INTO sales_relation VALUES
+    -> (1,1,1,'2023-06-15',1),
+    -> (2,2,2,'2023-06-18',2),
+    -> (3,3,3,'2023-06-20',1),
+    -> (4,4,4,'2023-06-25',3),
+    -> (5,5,5,'2023-06-30',2);
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> select * from seles_relation;
++---------+-----------+------------+------------+---------------+
+| selesId | productID | customerID | seledate   | quantitysales |
++---------+-----------+------------+------------+---------------+
+|       1 |         1 |          1 | 2023-06-15 |             1 |
+|       2 |         2 |          2 | 2023-06-18 |             2 |
+|       3 |         3 |          3 | 2023-06-20 |             1 |
+|       4 |         4 |          4 | 2023-06-25 |             3 |
+|       5 |         5 |          5 | 2023-06-30 |             2 |
++---------+-----------+------------+------------+---------------+
+5 rows in set (0.198 sec)
+
+
+MariaDB [hospital]> select name from product_Relation;
++----------------------+
+| name                 |
++----------------------+
+| Ultra Televition     |
+| Runnig Shoes         |
+| Electric kettle      |
+| Denim jeans          |
+| Bluetooth Headphones |
++----------------------+
+5 rows in set (0.025 sec)
+
+MariaDB [hospital]> select CustomerID,RegistrationDate from Customer_Relation;
++------------+------------------+
+| CustomerID | RegistrationDate |
++------------+------------------+
+|          1 | 2025-03-15       |
+|          2 | 2024-05-11       |
+|          3 | 2022-06-18       |
+|          4 | 2021-09-15       |
+|          5 | 2023-01-10       |
++------------+------------------+
+5 rows in set (0.059 sec)
+
+MariaDB [hospital]> select  selesId,seledate from seles_relation;
++---------+------------+
+| selesId | seledate   |
++---------+------------+
+|       1 | 2023-06-15 |
+|       2 | 2023-06-18 |
+|       3 | 2023-06-20 |
+|       4 | 2023-06-25 |
+|       5 | 2023-06-30 |
++---------+------------+
+5 rows in set (0.042 sec)
+
+MariaDB [hospital]> select  selesId,seledate from seles_relation WHERE  quantitysales=2;
++---------+------------+
+| selesId | seledate   |
++---------+------------+
+|       2 | 2023-06-18 |
+|       5 | 2023-06-30 |
++---------+------------+
+2 rows in set (0.114 sec)
+
+MariaDB [hospital]> select name from product_Relation WHERE price>100;
++------------------+
+| name             |
++------------------+
+| Ultra Televition |
++------------------+
+1 row in set (0.015 sec)
+
+MariaDB [hospital]> select CustomerID from Customer_Relation WHERE  RegistrationDate<'2022-01-01';
++------------+
+| CustomerID |
++------------+
+|          4 |
++------------+
+1 row in set (0.039 sec)
+
+MariaDB [hospital]> select CustomerID from Customer_Relation WHERE year (RegistrationDate)<'2023';
++------------+
+| CustomerID |
++------------+
+|          3 |
+|          4 |
++------------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select DISTINCT  Catagory from product_Relation;
++------------+
+| Catagory   |
++------------+
+| Electronic |
+| Footwear   |
+| Appliances |
+| Clothing   |
++------------+
+4 rows in set (0.041 sec)
+
+MariaDB [hospital]> UPDATE Product_Relation SET price=145 WHERE price=45;
+Query OK, 1 row affected (0.162 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [hospital]> select *from Product_Relation;
++------------+----------------------+------------+-------+---------------+
+| product_id | Name                 | Catagory   | Price | StockQuantity |
++------------+----------------------+------------+-------+---------------+
+|          1 | Ultra Televition     | Electronic |  1200 |            30 |
+|          2 | Runnig Shoes         | Footwear   |   100 |            50 |
+|          3 | Electric kettle      | Appliances |   145 |            25 |
+|          4 | Denim jeans          | Clothing   |    60 |            40 |
+|          5 | Bluetooth Headphones | Electronic |   100 |            15 |
++------------+----------------------+------------+-------+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [hospital]> DELETE from  Customer_Relation WHERE customerID=3;
+Query OK, 1 row affected (0.149 sec)
+
+MariaDB [hospital]> select *from  Customer_Relation;
++------------+--------------+------------------+-------------+
+| CustomerID | FullName     | RegistrationDate | phoneno     |
++------------+--------------+------------------+-------------+
+|          1 | Alice Johan  | 2025-03-15       | +1213151215 |
+|          2 | Bob Smith    | 2024-05-11       | +1234455688 |
+|          4 | Veliyam Yaso | 2021-09-15       | +2332533346 |
+|          5 | Ranga Osari  | 2023-01-10       | +2332437896 |
++------------+--------------+------------------+-------------+
+4 rows in set (0.001 sec)
+
+Conclusion-Learnt how to write SQL Queries to get different details from tables.
+           Learnt to find unique details from table.
+           Learnt to use >,<,!=,= symbols to get details.
+           Learnt to change details in tables.
+           Learnt to delete details from tables.
+           

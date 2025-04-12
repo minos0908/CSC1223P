@@ -1,0 +1,417 @@
+
+Setting environment for using XAMPP for Windows.
+Futuremind@DESKTOP-PFVNKUO c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| hospital           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| university         |
+| uov                |
++--------------------+
+9 rows in set (0.078 sec)
+
+MariaDB [(none)]> use hospital;
+Database changed
+MariaDB [hospital]> show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| patient            |
+| students           |
++--------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students;
++----+---------+------+-------+-------------+
+| ID | Name    | Age  | Grade | City        |
++----+---------+------+-------+-------------+
+   | | Alice   |   20 | A     | New York
+    || Bob     |   22 | B     | Chicago
+   | | Charlie |   21 | A     | New York
+     | David   |   23 | C     | Boston
+    || Emma    |   22 | B     | Chicago
+|  6 | Frank   |   21 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+6 rows in set (0.189 sec)
+
+MariaDB [hospital]> delete from students
+    -> where ID;
+Query OK, 6 rows affected (0.094 sec)
+
+MariaDB [hospital]> select *from students;
+Empty set (0.001 sec)
+
+MariaDB [hospital]> DESC students;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int(11)     | NO   | PRI | NULL    |       |
+| Name  | varchar(10) | YES  |     | NULL    |       |
+| Age   | int(2)      | YES  |     | NULL    |       |
+| Grade | char(1)     | YES  |     | NULL    |       |
+| City  | varchar(15) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.067 sec)
+
+MariaDB [hospital]>  INSERT INTO students VALUES
+    -> (1,'Alice',20,'A','Newyork'),
+    -> (2,'Bob',22,'B','Chicago'),
+    -> (3,'Charlie',21,'A','Newyork'),
+    -> (4,'David',23,'C','Boston'),
+    -> (5,'Emmai',22,'B','Chicago'),
+    -> (6,'Frank',20,'A','los angelese');
+Query OK, 6 rows affected (0.131 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> select *from students;
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  2 | Bob     |   22 | B     | Chicago      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  4 | David   |   23 | C     | Boston       |
+|  5 | Emmai   |   22 | B     | Chicago      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select id,name from students;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | Alice   |
+|  2 | Bob     |
+|  3 | Charlie |
+|  4 | David   |
+|  5 | Emmai   |
+|  6 | Frank   |
++----+---------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select age,grade from students;
++------+-------+
+| age  | grade |
++------+-------+
+|   20 | A     |
+|   22 | B     |
+|   21 | A     |
+|   23 | C     |
+|   22 | B     |
+|   20 | A     |
++------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select age,grade from students WHERE grade='A' ;
++------+-------+
+| age  | grade |
++------+-------+
+|   20 | A     |
+|   21 | A     |
+|   20 | A     |
++------+-------+
+3 rows in set (0.082 sec)
+
+MariaDB [hospital]> select *from students WHERE grade='A';
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select name,grade from students WHERE grade='A' ;
++---------+-------+
+| name    | grade |
++---------+-------+
+| Alice   | A     |
+| Charlie | A     |
+| Frank   | A     |
++---------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE city='Chicago';
++----+-------+------+-------+---------+
+| ID | Name  | Age  | Grade | City    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  5 | Emmai |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE age BETWEEN 20 and 22;
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  2 | Bob     |   22 | B     | Chicago      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  5 | Emmai   |   22 | B     | Chicago      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+5 rows in set (0.097 sec)
+
+MariaDB [hospital]> select city from students;
++--------------+
+| city         |
++--------------+
+| Newyork      |
+| Chicago      |
+| Newyork      |
+| Boston       |
+| Chicago      |
+| los angelese |
++--------------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select DISTINCT city from students;
++--------------+
+| city         |
++--------------+
+| Newyork      |
+| Chicago      |
+| Boston       |
+| los angelese |
++--------------+
+4 rows in set (0.019 sec)
+
+MariaDB [hospital]> select *from students WHERE name like 'A%';
++----+-------+------+-------+---------+
+| ID | Name  | Age  | Grade | City    |
++----+-------+------+-------+---------+
+|  1 | Alice |   20 | A     | Newyork |
++----+-------+------+-------+---------+
+1 row in set (0.037 sec)
+
+MariaDB [hospital]> select *from students WHERE name ='Alice';
++----+-------+------+-------+---------+
+| ID | Name  | Age  | Grade | City    |
++----+-------+------+-------+---------+
+|  1 | Alice |   20 | A     | Newyork |
++----+-------+------+-------+---------+
+1 row in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE name like '%e';
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  3 | Charlie |   21 | A     | Newyork |
++----+---------+------+-------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE name like '%i%';
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  3 | Charlie |   21 | A     | Newyork |
+|  4 | David   |   23 | C     | Boston  |
+|  5 | Emmai   |   22 | B     | Chicago |
++----+---------+------+-------+---------+
+4 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE name like '%li%';
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  3 | Charlie |   21 | A     | Newyork |
++----+---------+------+-------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE city like 'Newyork';
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  3 | Charlie |   21 | A     | Newyork |
++----+---------+------+-------+---------+
+2 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE grade='A';
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE city ='Newyork' OR grade='A';
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+3 rows in set (0.040 sec)
+
+MariaDB [hospital]> select *from students WHERE city ='Newyork' AND grade='A';
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  3 | Charlie |   21 | A     | Newyork |
++----+---------+------+-------+---------+
+2 rows in set (0.058 sec)
+
+MariaDB [hospital]> select *from students WHERE NOT grade='A';
++----+-------+------+-------+---------+
+| ID | Name  | Age  | Grade | City    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  4 | David |   23 | C     | Boston  |
+|  5 | Emmai |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students WHERE city!='Newyork' AND city!='los angelese';
++----+-------+------+-------+---------+
+| ID | Name  | Age  | Grade | City    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  4 | David |   23 | C     | Boston  |
+|  5 | Emmai |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select *from students LIMIT 3;
++----+---------+------+-------+---------+
+| ID | Name    | Age  | Grade | City    |
++----+---------+------+-------+---------+
+|  1 | Alice   |   20 | A     | Newyork |
+|  2 | Bob     |   22 | B     | Chicago |
+|  3 | Charlie |   21 | A     | Newyork |
++----+---------+------+-------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> select MAX(age) from students ;
++----------+
+| MAX(age) |
++----------+
+|       23 |
++----------+
+1 row in set (0.055 sec)
+
+MariaDB [hospital]> select MIN(age) from students ;
++----------+
+| MIN(age) |
++----------+
+|       20 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [hospital]> select AVG(age) from students ;
++----------+
+| AVG(age) |
++----------+
+|  21.3333 |
++----------+
+1 row in set (0.269 sec)
+
+MariaDB [hospital]> select UPPER(name) from students ;
++-------------+
+| UPPER(name) |
++-------------+
+| ALICE       |
+| BOB         |
+| CHARLIE     |
+| DAVID       |
+| EMMAI       |
+| FRANK       |
++-------------+
+6 rows in set (0.052 sec)
+
+MariaDB [hospital]> select LOWER(name) from students ;
++-------------+
+| LOWER(name) |
++-------------+
+| alice       |
+| bob         |
+| charlie     |
+| david       |
+| emmai       |
+| frank       |
++-------------+
+6 rows in set (0.048 sec)
+
+MariaDB [hospital]> select *from students ;
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  2 | Bob     |   22 | B     | Chicago      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  4 | David   |   23 | C     | Boston       |
+|  5 | Emmai   |   22 | B     | Chicago      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select UPPER(name) from students ;selet name AS student_name from students;
++-------------+
+| UPPER(name) |
++-------------+
+| ALICE       |
+| BOB         |
+| CHARLIE     |
+| DAVID       |
+| EMMAI       |
+| FRANK       |
++-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [hospital]> select name AS student_name from students;
++--------------+
+| student_name |
++--------------+
+| Alice        |
+| Bob          |
+| Charlie      |
+| David        |
+| Emmai        |
+| Frank        |
++--------------+
+6 rows in set (0.321 sec)
+MariaDB [hospital]> select *from students ;
++----+---------+------+-------+--------------+
+| ID | Name    | Age  | Grade | City         |
++----+---------+------+-------+--------------+
+|  1 | Alice   |   20 | A     | Newyork      |
+|  2 | Bob     |   22 | B     | Chicago      |
+|  3 | Charlie |   21 | A     | Newyork      |
+|  4 | David   |   23 | C     | Boston       |
+|  5 | Emmai   |   22 | B     | Chicago      |
+|  6 | Frank   |   20 | A     | los angelese |
++----+---------+------+-------+--------------+
+6 rows in set (0.001 sec)
+MariaDB [hospital]> Bye   
+	   
+	   CONCULUTION:Learnt how to write SQL Queries to get different details from tables.
+           Learnt to find unique details from table.
+           Learnt to use >,<,!=,= symbols to get details.
+           Learnt to change details in tables.
+           Learnt to delete details from tables.
+           
